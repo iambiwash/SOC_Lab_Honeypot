@@ -68,6 +68,8 @@ SecurityEvent
 | where EventID == 4625
 | project TimeGenerated, Account, IPAddress, FailureReason
 | order by TimeGenerated desc
+
+
 📸 Sentinel Dashboard Example:
 
 6️⃣ Mapping Attacker Locations
@@ -93,4 +95,5 @@ By completing this project, you have:
 🔗 LinkedIn: Your Profile
 
 🔒 Disclaimer: This project is for educational purposes only.
+
 
