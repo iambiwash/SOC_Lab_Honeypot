@@ -1,64 +1,147 @@
-# 🏠 Home SOC Lab in Azure: Cybersecurity Project
+# 🛡️ Creating a Basic Home SOC Lab in the Cloud 🖥️☁️
 
-## 📌 Overview
-This project is designed to help cybersecurity enthusiasts set up a **basic home SOC (Security Operations Center) lab** using **Microsoft Azure**. The lab involves creating a **honeypot**—a deliberately vulnerable virtual machine (VM)—that attracts attackers. By monitoring attack attempts in real-time, participants can learn about log analysis, threat detection, and security monitoring, making it an excellent hands-on project for a cybersecurity resume.
+![Cybersecurity Lab](assets/images/cybersecurity_lab.png)  
 
-## 🎯 Purpose
-The goal of this lab is to:
-- 🚀 Deploy a **honeypot VM** on Azure that is open to public internet attacks.
-- 📊 **Collect and analyze attack logs** using a centralized logging system.
-- 🔎 Connect logs to **Microsoft Sentinel (SIEM)** for interactive analysis.
-- 🗺️ **Visualize attack origins on a map** using IP geolocation data.
+## 🚀 Introduction
 
-This setup mimics **real-world security operations** and helps users understand how security teams detect and respond to threats.
+In this tutorial, we will set up a **Basic Home SOC Lab** on a cloud platform using a **free Azure subscription**. This project is ideal for cybersecurity enthusiasts and professionals looking to gain hands-on experience with attack monitoring. 
 
----
+Through this lab, we will:
+- Deploy a **honeypot** (intentionally vulnerable virtual machine).
+- **Monitor attack attempts** in real-time.
+- **Analyze logs** using Microsoft Sentinel and Kusto Query Language (KQL).
+- **Visualize cyber threats** using a geographic attack map.
 
-## 🛠️ Project Scope
-### **1️⃣ Setting Up Azure Environment**
-- 🔹 **Create a free Azure subscription** (or use pay-as-you-go).
-- 🔹 Set up a **resource group** to organize cloud resources.
-- 🔹 Deploy a **Windows-based Virtual Machine (VM)** to act as a honeypot.
-
-### **2️⃣ Configuring Network Security**
-- 🔹 **Create a virtual network** to connect the VM.
-- 🔹 **Disable all firewalls** to make the honeypot attractive to attackers.
-- 🔹 **Modify the network security group (NSG)** to allow all inbound traffic.
-
-### **3️⃣ Log Management & Forwarding**
-- 🔹 Use **Windows Event Viewer** to check failed login attempts.
-- 🔹 Configure **Log Analytics Workspace** as a central log repository.
-- 🔹 Integrate **Azure Monitor Agent** to forward logs to **Microsoft Sentinel**.
-
-### **4️⃣ Analyzing Attacks with SIEM**
-- 🔹 Use **Kusto Query Language (KQL)** to filter logs and identify failed login attempts.
-- 🔹 Create a **watchlist** of attacker IP addresses and map them to geographic locations.
-- 🔹 Visualize attack patterns using an **interactive dashboard in Sentinel**.
+✅ **Perfect for cybersecurity portfolios and SOC analyst training!**  
 
 ---
 
-## 🔧 Tools & Technologies Used
-- ☁️ **Cloud Provider**: Microsoft Azure (Free Subscription)
-- 🖥️ **Operating System**: Windows 10/Server (for VM)
-- 🔍 **SIEM Solution**: Microsoft Sentinel
-- 📊 **Logging Service**: Azure Log Analytics Workspace
-- 💾 **Query Language**: Kusto Query Language (KQL)
-- 🌍 **Visualization**: Attack heatmap using Sentinel Workbooks
+## 📌 Key Components
+
+| **Component**        | **Description** |
+|----------------------|----------------|
+| 🌐 **Azure Subscription** | Free cloud platform for deployment |
+| 🖥️ **Virtual Machine (VM)** | Windows-based system as a honeypot |
+| 🔒 **Network Security Group** | Allows open inbound traffic for attack monitoring |
+| 📊 **Log Forwarding** | Sends attack logs for analysis |
+| 🛡️ **SIEM (Microsoft Sentinel)** | Connects logs for real-time monitoring |
+| 🗺️ **Attack Mapping** | Displays attack origins on a world map |
 
 ---
 
-## ✅ Benefits of This Lab
-- 🔥 **Hands-on Cybersecurity Experience** – Understand attacker behavior and logging techniques.  
-- 📈 **Practical SIEM Training** – Gain real-world experience in log analysis using Sentinel.  
-- 🎯 **Resume-Worthy Project** – Showcase your skills in cloud security and threat intelligence.  
-- 💰 **No Cost Setup** – Uses a free-tier Azure subscription, making it accessible to all.  
+## ⚙️ Step-by-Step Setup Guide
+
+### 1️⃣ **Sign Up for an Azure Subscription**
+📌 Go to [Azure Free Tier](https://azure.microsoft.com/en-us/free/) and create an account.  
+A credit card is required for verification, but **you won’t be charged for free-tier usage.**  
 
 ---
 
-## 📌 Next Steps
-- [ ] 📥 Follow the **detailed step-by-step guide (PDF)** to complete the setup.
-- [ ] ⏳ Leave the honeypot running for **24 hours** to observe attacks in real-time.
-- [ ] 🔎 Experiment with **KQL queries** to gain insights from logs.
-- [ ] ⚡ Customize alerts and automation in **Sentinel** to detect threats more efficiently.
+### 2️⃣ **Deploy a Virtual Machine (VM)**  
+- Create a **Resource Group** to organize all lab components.
+- Set up a **Virtual Network** to allow connectivity.
+- Deploy a **Windows-based VM** with a **public IP**.
 
-🛡️ **Let's build a cybersecurity lab and start analyzing real-world attacks today!** 🚀
+**💡 Pro Tip:** Name your VM something **generic** to prevent attackers from realizing it’s a honeypot.
+
+#### 📌 Virtual Machine Architecture
+```plaintext
++---------------------------------------+
+|          Azure Cloud                  |
+| +-----------------------------------+ |
+| |  Virtual Machine (Windows OS)     | |
+| |  - Public IP Assigned             | |
+| |  - RDP Enabled                    | |
+| +-----------------------------------+ |
+|    ⬇ Network Security Group (NSG) ⬇    |
+| +-----------------------------------+ |
+| |  Inbound Rules:                   | |
+| |  - Allow all traffic (0.0.0.0/0)  | |
+| +-----------------------------------+ |
++---------------------------------------+
+📸 Screenshot Example:
+
+3️⃣ Configure Network Security Group (NSG)
+Open all inbound ports to attract potential attacks.
+Disable Windows Firewall to allow unrestricted access.
+🚨 Warning: This is for educational purposes only. Do not use this setup in a production environment.
+
+📸 Example NSG Rule:
+
+plaintext
+Copy
+Edit
+Allow All Traffic | Inbound | Any | Any | Any | Any | Allow
+4️⃣ Enable Log Collection & Monitoring
+Access Windows Event Viewer on the VM.
+Monitor Event ID 4625 (Failed Login Attempts).
+Manually generate logs by attempting to log in with incorrect passwords.
+📸 Log Monitoring Screenshot:
+
+5️⃣ Integrate with Microsoft Sentinel
+Create a Log Analytics Workspace in Azure.
+Connect Sentinel for real-time log analysis.
+Use Kusto Query Language (KQL) to analyze failed login attempts.
+📌 Example KQL Query for Failed Logins:
+
+kql
+Copy
+Edit
+SecurityEvent
+| where EventID == 4625
+| project TimeGenerated, Account, IPAddress, FailureReason
+| order by TimeGenerated desc
+📸 Sentinel Log Analysis Screenshot:
+
+6️⃣ Attack Visualization with Geographic Mapping
+Extract IP addresses of attackers from logs.
+Use MaxMind GeoIP Database to locate attack sources.
+Plot results on a world map.
+📸 Geographic Attack Map Example:
+
+📽️ Video Demonstration
+🎥 Watch the full setup walkthrough here:
+
+🏁 Final Thoughts
+Congratulations! 🎉 You have successfully set up a Home SOC Lab in the cloud.
+This lab provides real-world cybersecurity experience, helping you: ✅ Understand how cyber attacks happen.
+✅ Gain hands-on experience with log analysis.
+✅ Improve your SOC Analyst and Threat Hunting skills.
+
+🔗 Next Steps:
+
+Add Threat Intelligence Feeds to analyze attacker patterns.
+Implement automated alerts for failed logins.
+Explore advanced SIEM integrations (Splunk, ELK Stack).
+📚 Additional Resources
+📖 Microsoft Sentinel Documentation → Read Here
+📖 Kusto Query Language (KQL) Guide → Learn More
+
+🤝 Connect with Me
+If you found this project useful, feel free to connect and share your feedback!
+
+📧 Email: your.email@example.com
+🐦 Twitter: @yourhandle
+🔗 LinkedIn: Your Profile
+
+🔒 Disclaimer: This project is for educational purposes only. Do not deploy vulnerable systems in production environments.
+
+markdown
+Copy
+Edit
+
+### 📌 Features in this `README.md`
+✅ **Professional Structure** with clear sections.  
+✅ **Visual Elements** (images, diagrams, video thumbnails).  
+✅ **Tables for Component Breakdown**.  
+✅ **Code Blocks for KQL Queries**.  
+✅ **Security Warnings & Pro Tips**.  
+✅ **Clickable Links & Video Demonstration Placeholder**.
+
+---
+### 🛠 Next Steps
+- Upload your `assets/` folder with **images, videos, and diagrams**.
+- Replace placeholders with **your real video links**.
+- Adjust the **contact information** in the "Connect with Me" section.
+
+Let me know if you need any modifications! 🚀
