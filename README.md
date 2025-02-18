@@ -18,7 +18,10 @@ The goal of this lab is to:
 
 This setup mimics real-world security operations and helps users understand how security teams detect and respond to threats.
 
+
 🛠️ Project Scope
+
+
 
 1️⃣ Setting Up Azure Environment
 
@@ -28,6 +31,8 @@ This setup mimics real-world security operations and helps users understand how 
 
 🔹 Deploy a Windows-based Virtual Machine (VM) to act as a honeypot.
 
+
+
 2️⃣ Configuring Network Security
 
 🔹 Create a virtual network to connect the VM.
@@ -35,6 +40,8 @@ This setup mimics real-world security operations and helps users understand how 
 🔹 Disable all firewalls to make the honeypot attractive to attackers.
 
 🔹 Modify the network security group (NSG) to allow all inbound traffic.
+
+
 
 3️⃣ Log Management & Forwarding
 
@@ -44,6 +51,8 @@ This setup mimics real-world security operations and helps users understand how 
 
 🔹 Integrate Azure Monitor Agent to forward logs to Microsoft Sentinel.
 
+
+
 4️⃣ Analyzing Attacks with SIEM
 
 🔹 Use Kusto Query Language (KQL) to filter logs and identify failed login attempts.
@@ -51,6 +60,8 @@ This setup mimics real-world security operations and helps users understand how 
 🔹 Create a watchlist of attacker IP addresses and map them to geographic locations.
 
 🔹 Visualize attack patterns using an interactive dashboard in Sentinel.
+
+
 
 🔧 Tools & Technologies Used
 
@@ -66,6 +77,8 @@ This setup mimics real-world security operations and helps users understand how 
 
 🌍 Visualization: Attack heatmap using Sentinel Workbooks
 
+
+
 ✅ Benefits of This Lab
 
 🔥 Hands-on Cybersecurity Experience – Understand attacker behavior and logging techniques.
@@ -75,6 +88,8 @@ This setup mimics real-world security operations and helps users understand how 
 🎯 Resume-Worthy Project – Showcase your skills in cloud security and threat intelligence.
 
 💰 No Cost Setup – Uses a free-tier Azure subscription, making it accessible to all.
+
+
 
 📌 Next Steps
 
