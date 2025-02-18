@@ -11,6 +11,10 @@ This guide provides a step-by-step walkthrough to set up a Home Security Operati
 
 ✔️ A free Azure account (or pay-as-you-go if needed)✔️ Basic understanding of virtual machines & networking✔️ A Windows or Mac computer with an internet connection
 
+## 📺 Video Walkthrough
+<iframe width="560" height="315" src="https://www.youtube.com/embed/g5JL2RIbThM" frameborder="0" allowfullscreen></iframe>
+
+
 🚀 Step 1: Create an Azure Account
 
 1️⃣ Go to Azure Free Account.2️⃣ Click Start Free and sign up using a personal email.3️⃣ Enter your credit card for verification (no charges for free-tier usage).4️⃣ Once verified, log in to the Azure Portal at portal.azure.com.
