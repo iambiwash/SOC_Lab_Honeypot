@@ -94,16 +94,3 @@ By completing this project, you have:
 
 🔒 Disclaimer: This project is for educational purposes only.
 
-yaml
-Copy
-Edit
-
----
-
-### ✅ **Summary of Files:**
-1. **`README.md`** → **Project overview**, **video walkthrough**, and scope.  
-2. **`SETUP_GUIDE.md`** → **Detailed step-by-step instructions** with explanations.  
-
-Both files are structured for **clarity and ease of navigation**, ensuring a professional and engaging experience for users. 🚀  
-
-Let me know if you need any further modifications! 🎯
