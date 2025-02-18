@@ -1,110 +1,109 @@
-layout: default
-title: Home SOC Lab in Azure
+# 🛠️ Step-by-Step Guide: Home SOC Lab Setup  
 
-🛡️ Step-by-Step Guide: Home SOC Lab in Azure
+## 📌 Overview  
+This guide provides **detailed instructions** for setting up the Home SOC Lab, explaining **key configurations** and their significance.  
 
-📌 Introduction
+---
 
-This guide provides a step-by-step walkthrough to set up a Home Security Operations Center (SOC) Lab using Microsoft Azure. By the end of this guide, you will have a honeypot virtual machine (VM) that attracts attackers, forwards logs to a central repository, and analyzes attack patterns using Microsoft Sentinel.
+## 1️⃣ **Azure Subscription Setup**
+🔹 **Sign Up for an Azure Free Account** → [Azure Free Tier](https://azure.microsoft.com/en-us/free/)  
+🔹 A credit card is required for identity verification, but **you won’t be charged for free-tier usage**.  
 
-🔹 Prerequisites
+---
 
-✔️ A free Azure account (or pay-as-you-go if needed)✔️ Basic understanding of virtual machines & networking✔️ A Windows or Mac computer with an internet connection
+## 2️⃣ **Create the Virtual Machine (VM)**
+1. **Log in to the Azure Portal** → [portal.azure.com](https://portal.azure.com/)  
+2. Navigate to **Virtual Machines** → Click **Create** → **Virtual Machine**.  
+3. **Select OS:** Choose **Windows Server 2019** for the honeypot.  
+4. **Set Username & Password** → This will be used for **Remote Desktop (RDP)**.  
+5. **Enable Public IP** → Required for external attack attempts.  
+6. **Network Configuration:**
+   - Ensure **Allow RDP (Port 3389)** is enabled.
+   - **Disable Firewall** inside the VM after deployment.
 
-## 📺 Video Walkthrough
-<iframe width="560" height="315" src="https://www.youtube.com/embed/g5JL2RIbThM" frameborder="0" allowfullscreen></iframe>
+📸 **Screenshot Example:**  
+![VM Setup](assets/images/vm_setup.png)
 
+---
 
-🚀 Step 1: Create an Azure Account
+## 3️⃣ **Network Security Group (NSG) Configuration**
+The **NSG (Network Security Group)** controls incoming and outgoing traffic.  
+**Goal:** Allow attackers to attempt unauthorized access.
 
-1️⃣ Go to Azure Free Account.2️⃣ Click Start Free and sign up using a personal email.3️⃣ Enter your credit card for verification (no charges for free-tier usage).4️⃣ Once verified, log in to the Azure Portal at portal.azure.com.
+### **Steps to Open All Ports:**
+1. In Azure Portal → Go to **Virtual Machines** → Select your VM.
+2. Click **Networking** → **Add Inbound Rule**.
+3. **Rule Configuration:**
+   - **Source:** Any  
+   - **Destination:** Virtual Machine  
+   - **Protocol:** Any  
+   - **Action:** Allow  
+4. **Save Changes.**  
 
-🏗️ Step 2: Set Up the Honeypot Virtual Machine
+🚨 **Warning:** This makes your VM highly vulnerable! Do **not** use this setup in production.
 
-2.1 Create a Resource Group
+---
 
-1️⃣ In the Azure Portal, search for Resource Groups.2️⃣ Click Create, enter a name (e.g., RG-SOC-Lab), and select a region (e.g., East US).3️⃣ Click Review + Create, then Create.
+## 4️⃣ **Monitoring Attack Attempts**
+Once the **honeypot VM** is online, attackers will attempt to gain access.
 
-2.2 Create a Virtual Network
+### **How to View Logs:**
+1. **Open Event Viewer** inside the VM.
+2. Navigate to **Windows Logs → Security**.
+3. Look for **Event ID 4625 (Failed Login Attempts)**.
 
-1️⃣ Search for Virtual Networks in the Azure Portal.2️⃣ Click Create, enter a name (e.g., VNet-SOC-Lab), and assign it to your resource group.3️⃣ Click Review + Create, then Create.
+📸 **Event Viewer Example:**  
+![Event Viewer](assets/images/event_viewer.png)
 
-2.3 Deploy a Virtual Machine (VM)
+---
 
-1️⃣ Search for Virtual Machines and click Create.2️⃣ Select your resource group.3️⃣ Enter a name (e.g., CorpNet-East1).4️⃣ Select Windows 10 as the operating system.5️⃣ Choose a Standard DS1 v2 instance (free-tier eligible).6️⃣ Set the username (labuser) and password (CyberLab123!).7️⃣ Click Review + Create, then Create.
+## 5️⃣ **Forward Logs to Microsoft Sentinel (SIEM)**
+🔹 **Step 1:** Create a **Log Analytics Workspace**  
+🔹 **Step 2:** Connect **Windows Security Logs** to Sentinel  
+🔹 **Step 3:** Configure Kusto Query Language (KQL) for analysis  
 
-2.4 Configure Network Security Group (NSG)
-
-1️⃣ Go to Networking under the VM settings.2️⃣ Remove any existing inbound security rules.3️⃣ Click Add inbound rule and set:
-
-Source: Any
-
-Protocol: Any
-
-Port Range: *
-
-Action: Allow4️⃣ Click Save.
-
-📡 Step 3: Configure Log Collection
-
-3.1 Install Azure Monitoring Agent
-
-1️⃣ Search for Extensions + Applications under the VM.2️⃣ Click Add Extension, select Azure Monitor Agent.3️⃣ Click Install.
-
-3.2 Set Up Log Analytics Workspace
-
-1️⃣ Search for Log Analytics Workspace.2️⃣ Click Create, enter a name (e.g., LAW-SOC-Lab), and assign it to your resource group.3️⃣ Choose East US.4️⃣ Click Review + Create, then Create.
-
-3.3 Link VM to Log Analytics Workspace
-
-1️⃣ Go to the Log Analytics Workspace you just created.2️⃣ Select Agents Management.3️⃣ Copy the Workspace ID and Primary Key.4️⃣ Go back to your VM, select Diagnostics Settings, and add the Workspace ID & Key.
-
-🔍 Step 4: Set Up Microsoft Sentinel for Analysis
-
-4.1 Enable Sentinel
-
-1️⃣ Search for Microsoft Sentinel in Azure.2️⃣ Click Create and assign it to your log analytics workspace.
-
-4.2 Connect Logs to Sentinel
-
-1️⃣ Open Sentinel, click Data Connectors.2️⃣ Search for Security Events and enable it.3️⃣ Click Connect and enable Windows Security Events collection.
-
-4.3 Query Attack Logs
-
-1️⃣ Open Sentinel, go to Logs.2️⃣ Run the query:
-
+📌 **Example KQL Query for Failed Logins:**
+```kql
 SecurityEvent
-| where EventID == 4625 // Failed login attempts
-| project TimeGenerated, Account, IPAddress
+| where EventID == 4625
+| project TimeGenerated, Account, IPAddress, FailureReason
+| order by TimeGenerated desc
+📸 Sentinel Dashboard Example:
 
-3️⃣ Review failed login attempts.
+6️⃣ Mapping Attacker Locations
+Extract IP addresses from Sentinel logs.
+Use MaxMind GeoIP Database to get locations.
+Generate a world map showing attacker sources.
+📸 Geographic Attack Map Example:
 
-🗺️ Step 5: Map Attacks in Sentinel
+🎯 Final Thoughts
+By completing this project, you have:
+✅ Set up a honeypot to attract cyber attacks.
+✅ Configured log collection and SIEM integration.
+✅ Analyzed failed login attempts using KQL.
+✅ Mapped attacker locations to understand real-world threats.
 
-5.1 Upload IP Geolocation Watchlist
+🔗 Additional Resources
+📖 Microsoft Sentinel Documentation → Read Here
+📖 Kusto Query Language (KQL) Guide → Learn More
 
-1️⃣ Download the GeoIP List (provided in the resources).2️⃣ Go to Sentinel > Watchlists.3️⃣ Click Create Watchlist, upload the GeoIP file.
+📞 Contact & Support
+📧 Email: your.email@example.com
+🐦 Twitter: @yourhandle
+🔗 LinkedIn: Your Profile
 
-5.2 Visualize Attacks on a Map
+🔒 Disclaimer: This project is for educational purposes only.
 
-1️⃣ Open Workbooks in Sentinel.2️⃣ Click New Workbook > Edit.3️⃣ Copy & Paste the JSON attack map template.4️⃣ Click Save, and view real-time attack locations on a global map.
+yaml
+Copy
+Edit
 
-🎯 Conclusion
+---
 
-This Home SOC Lab provides hands-on experience in cloud security monitoring. You will:
+### ✅ **Summary of Files:**
+1. **`README.md`** → **Project overview**, **video walkthrough**, and scope.  
+2. **`SETUP_GUIDE.md`** → **Detailed step-by-step instructions** with explanations.  
 
-🔍 Detect & analyze cyber threats in real-time.
+Both files are structured for **clarity and ease of navigation**, ensuring a professional and engaging experience for users. 🚀  
 
-⚡ Use SIEM (Microsoft Sentinel) to visualize attack sources.
-
-🚀 Improve cybersecurity skills through practical learning.
-
-✅ Next Steps
-
-✅ Leave the honeypot running for 24 hours to collect data.
-
-✅ Experiment with KQL queries for deeper analysis.
-
-✅ Explore Microsoft Sentinel alerts for automated threat detection.
-
-🚀 Take your cybersecurity skills to the next level with this project! 🔥
+Let me know if you need any further modifications! 🎯
