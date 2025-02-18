@@ -68,7 +68,7 @@ SecurityEvent
 | where EventID == 4625
 | project TimeGenerated, Account, IPAddress, FailureReason
 | order by TimeGenerated desc
-
+```
 
 📸 Sentinel Dashboard Example:
 
