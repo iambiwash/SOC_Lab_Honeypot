@@ -1,3 +1,6 @@
+layout: default
+title: Home SOC Lab in Azure
+
 🛡️ Step-by-Step Guide: Home SOC Lab in Azure
 
 📌 Introduction
@@ -16,15 +19,15 @@ This guide provides a step-by-step walkthrough to set up a Home Security Operati
 
 2.1 Create a Resource Group
 
-1️⃣ In the Azure Portal, search for Resource Groups.2️⃣ Click Create, name it enter a name (e.g., RG-SOC-Lab), and select a region (e.g., East US).3️⃣ Click Review + Create, then Create.
+1️⃣ In the Azure Portal, search for Resource Groups.2️⃣ Click Create, enter a name (e.g., RG-SOC-Lab), and select a region (e.g., East US).3️⃣ Click Review + Create, then Create.
 
 2.2 Create a Virtual Network
 
-1️⃣ Search for Virtual Networks in the Azure Portal.2️⃣ Click Create, name it enter a name (e.g., VNet-SOC-Lab), and assign it to enter a name (e.g., RG-SOC-Lab).3️⃣ Click Review + Create, then Create.
+1️⃣ Search for Virtual Networks in the Azure Portal.2️⃣ Click Create, enter a name (e.g., VNet-SOC-Lab), and assign it to your resource group.3️⃣ Click Review + Create, then Create.
 
 2.3 Deploy a Virtual Machine (VM)
 
-1️⃣ Search for Virtual Machines and click Create.2️⃣ Select enter a name (e.g., RG-SOC-Lab) as the resource group.3️⃣ Name the VM (e.g., enter a name (e.g., CorpNet-East1)).4️⃣ Select Windows 10 as the operating system.5️⃣ Choose a Standard DS1 v2 instance (free-tier eligible).6️⃣ Set the username (labuser) and password (CyberLab123!).7️⃣ Click Review + Create, then Create.
+1️⃣ Search for Virtual Machines and click Create.2️⃣ Select your resource group.3️⃣ Enter a name (e.g., CorpNet-East1).4️⃣ Select Windows 10 as the operating system.5️⃣ Choose a Standard DS1 v2 instance (free-tier eligible).6️⃣ Set the username (labuser) and password (CyberLab123!).7️⃣ Click Review + Create, then Create.
 
 2.4 Configure Network Security Group (NSG)
 
@@ -46,7 +49,7 @@ Action: Allow4️⃣ Click Save.
 
 3.2 Set Up Log Analytics Workspace
 
-1️⃣ Search for Log Analytics Workspace.2️⃣ Click Create, assign it to enter a name (e.g., RG-SOC-Lab).3️⃣ Name it enter a name (e.g., LAW-SOC-Lab), choose East US.4️⃣ Click Review + Create, then Create.
+1️⃣ Search for Log Analytics Workspace.2️⃣ Click Create, enter a name (e.g., LAW-SOC-Lab), and assign it to your resource group.3️⃣ Choose East US.4️⃣ Click Review + Create, then Create.
 
 3.3 Link VM to Log Analytics Workspace
 
@@ -56,7 +59,7 @@ Action: Allow4️⃣ Click Save.
 
 4.1 Enable Sentinel
 
-1️⃣ Search for Microsoft Sentinel in Azure.2️⃣ Click Create and assign it to enter a name (e.g., LAW-SOC-Lab).
+1️⃣ Search for Microsoft Sentinel in Azure.2️⃣ Click Create and assign it to your log analytics workspace.
 
 4.2 Connect Logs to Sentinel
 
